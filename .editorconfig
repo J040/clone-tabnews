@@ -1,0 +1,6 @@
+root = true
+
+# [*] means that I want to apply it to ALL files (I could specify for all [.js] files, for example)
+[*] 
+indent_style = space
+indent_size = 4
