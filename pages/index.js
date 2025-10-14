@@ -1,7 +1,7 @@
 function Home() {
   var content = (
     <div>
-      <h1>Cinthia, se você estiver lendo isso, da uma risadinha!</h1>
+      <h1>Em construção...</h1>
     </div>
   );
   return content;
