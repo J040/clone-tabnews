@@ -2,9 +2,8 @@ import database from "infra/database.js";
 
 async function status(request, response) {
   const updatedAt = new Date().toISOString();
-  
-  // const selectVersion = await database.query('SELECT version();');
-  const selectVersion = await database.query('SHOW server_version;'); // Returns "16.0"
+
+  const selectVersion = await database.query('SHOW server_version;');
   const postgresVersion = selectVersion.rows[0].server_version;
   
   const selectConnections = await database.query('SHOW max_connections;');
