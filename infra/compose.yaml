@@ -1,5 +1,6 @@
 services:
   database:
+    container_name: "postgres-dev"
     image: "postgres:16.0-alpine3.18" # We found this Postgres image on "docker hub"
     env_file:
       - ../.env.development # This makes Postgres from Container & from Outside share the same "variables" ("docker hub"/Postgres image has a list of all needed variables)
