@@ -1,3 +1,11 @@
+import orchestrator from "tests/orchestrator.js";
+
+// As default, JEST only accept "5sec" as await time in "beforeAll()" -> We can change that in jest.config.js to "60sec"
+// We set "testTimeout = 60000" in jest.config.js - That might be cases where the tests can run in a very slow machine
+beforeAll(async () => {
+  await orchestrator.waitForAllServices();
+})
+
 test("GET to /api/v1/status should return 200", async () => {
   const response = await fetch("http://localhost:3000/api/v1/status");
   expect(response.status).toBe(200);
