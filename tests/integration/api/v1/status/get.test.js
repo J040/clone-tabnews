@@ -4,7 +4,7 @@ import orchestrator from "tests/orchestrator.js";
 // We set "testTimeout = 60000" in jest.config.js - That might be cases where the tests can run in a very slow machine
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
-})
+});
 
 test("GET to /api/v1/status should return 200", async () => {
   const response = await fetch("http://localhost:3000/api/v1/status");
@@ -20,7 +20,7 @@ test("GET to /api/v1/status should return 200", async () => {
 
   // Testing Postgres Max Connections
   expect(responseBody.dependencies.database.max_connections).toEqual(100);
-  
+
   // Testing Postgres Used Connections
   expect(responseBody.dependencies.database.opened_connections).toEqual(1);
 });
