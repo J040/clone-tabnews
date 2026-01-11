@@ -5,14 +5,13 @@ function Home() {
   //   <main className={styles.stage}>
   //     <image
   //       src="/resources/background-construction.jpg"
-  //       alt="Em construção"
+  //       alt="Em construção!"
   //       className={styles.fill}
   //     />
   //   </main>
   // );
   // return content;
   return <h1>Esse ano vai! 😎</h1>;
-
 }
 
 export default Home;
