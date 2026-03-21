@@ -7,7 +7,6 @@ async function fetchStatus(key) {
 }
 
 export default function StatusPage() {
-
   return (
     <>
       <h1>Status</h1>
@@ -20,14 +19,14 @@ export default function StatusPage() {
 
 function UpdatedAt() {
   const { isLoading, data } = useSWR("/api/v1/status", fetchStatus, {
-    refreshInterval: 2000
+    refreshInterval: 2000,
   });
 
   if (isLoading || !data) {
     return <div>Carregando...</div>;
   }
 
-  let UpdatedAtText = new Date(data.updated_at).toLocaleString("pt-BR")
+  let UpdatedAtText = new Date(data.updated_at).toLocaleString("pt-BR");
 
   return <div>Última atualização: {UpdatedAtText}</div>;
 }
