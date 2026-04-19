@@ -10,7 +10,9 @@ async function query(queryObject) {
     console.error(error);
     throw error;
   } finally {
-    await client.end();
+    // Option chaining ("?.") 
+    // If the "client" doesn't exist we don't care about the ".end()"
+    await client?.end();
   }
 }
 
