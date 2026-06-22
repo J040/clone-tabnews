@@ -25,8 +25,8 @@ exports.up = (pgm) => {
       type: "varchar(60)",
       notNull: true,
     },
-    
-    // Why timestamp with timezone? https://justatheory.com/2012/04/postgres-use-timestamptz 
+
+    // Why timestamp with timezone? https://justatheory.com/2012/04/postgres-use-timestamptz
     // timestamptz ~ with "tz" because we wanna have the timezone from where it was created
     createdAt: {
       type: "timestamptz",
@@ -38,9 +38,9 @@ exports.up = (pgm) => {
       notNull: true,
       default: pgm.func("timezone('utc', now())"),
     },
-  })
+  });
 };
 
 // "false" diz para o módulo que não existe o ~movimento~ "down" nessa migration.
 // apenas o que está declarado acima, "up".
-exports.down = false; 
+exports.down = false;
