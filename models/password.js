@@ -13,10 +13,9 @@ async function compare(providedPassword, storedPassword) {
   return await bcrypt.compare(providedPassword, storedPassword);
 }
 
-
 const password = {
   hash,
   compare,
-}
+};
 
 export default password;

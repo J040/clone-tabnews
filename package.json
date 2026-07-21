@@ -4,7 +4,7 @@
   "description": "Implementação desenvolvida no https://curso.dev",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run services:up && npm run services:wait:database && npm run migrations:up && next dev --turbopack",
+    "dev": "npm run services:up && npm run services:wait:database && npm run migrations:up && next dev",
     "test": "npm run services:up && concurrently -n next,jest --hide next -k --success command-jest \"next dev\" \"jest --runInBand --verbose\"",
     "posttest": "npm run services:stop",
     "test:watch": "jest --watchAll --runInBand --verbose",
@@ -16,7 +16,7 @@
     "migrations:up": "node-pg-migrate -m infra/migrations --envPath .env.development up",
     "lint:prettier:check": "prettier --check .",
     "lint:prettier:fix": "prettier --write .",
-    "lint:eslint:check": "next lint --dir .",
+    "lint:eslint:check": "eslint .",
     "prepare": "husky",
     "commit": "cz"
   },

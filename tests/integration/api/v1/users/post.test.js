@@ -1,7 +1,7 @@
 import { version as uuidVersion } from "uuid";
 import orchestrator from "tests/orchestrator.js";
-import password from "models/password.js";
 import user from "models/user.js";
+import password from "models/password.js";
 
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
@@ -33,26 +33,26 @@ describe("POST /api/v1/users", () => {
         username: "joaovictor",
         email: "joao@curso.dev",
         password: responseBody.password,
-        createdAt: responseBody.createdAt,
-        updatedAt: responseBody.updatedAt,
+        created_at: responseBody.created_at,
+        updated_at: responseBody.updated_at,
       });
 
       expect(uuidVersion(responseBody.id)).toBe(4);
-      expect(Date.parse(responseBody.createdAt)).not.toBeNaN();
-      expect(Date.parse(responseBody.updatedAt)).not.toBeNaN();
+      expect(Date.parse(responseBody.created_at)).not.toBeNaN();
+      expect(Date.parse(responseBody.updated_at)).not.toBeNaN();
 
       const userInDatabase = await user.findOneByUsername("joaovictor");
-      
+
       const correctPasswordMatch = await password.compare(
-        "senha123", 
-        userInDatabase.password
+        "senha123",
+        userInDatabase.password,
       );
 
       const incorrectPasswordMatch = await password.compare(
-        "senhaErrada", 
-        userInDatabase.password
+        "senhaErrada",
+        userInDatabase.password,
       );
-      
+
       expect(correctPasswordMatch).toBe(true);
       expect(incorrectPasswordMatch).toBe(false);
     });
@@ -92,7 +92,7 @@ describe("POST /api/v1/users", () => {
       expect(response2Body).toEqual({
         name: "ValidationError",
         message: "O email informado já está sendo utilizado.",
-        action: "Utilize outro email para realizar o cadastro.",
+        action: "Utilize outro email para realizar esta operação.",
         status_code: 400,
       });
     });
@@ -131,8 +131,8 @@ describe("POST /api/v1/users", () => {
 
       expect(response2Body).toEqual({
         name: "ValidationError",
-        message: "O nome de usuário informado já está sendo utilizado.",
-        action: "Utilize outro nome de usuário para realizar o cadastro.",
+        message: "O username informado já está sendo utilizado.",
+        action: "Utilize outro nome de usuário para realizar esta operação.",
         status_code: 400,
       });
     });
