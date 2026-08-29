@@ -1,6 +1,7 @@
 import { version as uuidVersion } from "uuid";
 import orchestrator from "tests/orchestrator.js";
 import session from "models/session.js";
+import setCookieParser from "set-cookie-parser";
 
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
@@ -136,6 +137,19 @@ describe("POST /api/v1/sessions", () => {
       expiresAt.setMilliseconds(0);
       createdAt.setMilliseconds(0);
       expect(expiresAt - createdAt).toBe(session.EXPIRATION_IN_MILLISECONDS);
+
+      // "map = true" is important to get the cookie as an object instead of an array
+      const parsedCookies = setCookieParser(response, { 
+        map: true 
+      });
+
+      expect(parsedCookies.session_id).toEqual({
+        name: "session_id",
+        value: responseBody.token,
+        maxAge: session.EXPIRATION_IN_MILLISECONDS / 1000,
+        path: "/",
+        httpOnly: true,
+      });
     });
 
   });
