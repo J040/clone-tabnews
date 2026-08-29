@@ -23,7 +23,7 @@ exports.up = (pgm) => {
       type: "timestamptz",
       notNull: true,
     },
-    
+
     created_at: {
       type: "timestamptz",
       notNull: true,

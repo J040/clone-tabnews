@@ -37,7 +37,6 @@ describe("POST /api/v1/sessions", () => {
         action: "Verifique se os dados enviados estão corretos.",
         status_code: 401,
       });
-
     });
 
     test("With correct `email` but incorrect `password`", async () => {
@@ -66,11 +65,10 @@ describe("POST /api/v1/sessions", () => {
         action: "Verifique se os dados enviados estão corretos.",
         status_code: 401,
       });
-
     });
 
     test("With incorrect `email` and incorrect `password`", async () => {
-      await orchestrator.createUser({ });
+      await orchestrator.createUser({});
 
       const response = await fetch("http://localhost:3000/api/v1/sessions", {
         method: "POST",
@@ -93,7 +91,6 @@ describe("POST /api/v1/sessions", () => {
         action: "Verifique se os dados enviados estão corretos.",
         status_code: 401,
       });
-
     });
 
     test("With correct `email` and correct `password`", async () => {
@@ -139,8 +136,8 @@ describe("POST /api/v1/sessions", () => {
       expect(expiresAt - createdAt).toBe(session.EXPIRATION_IN_MILLISECONDS);
 
       // "map = true" is important to get the cookie as an object instead of an array
-      const parsedCookies = setCookieParser(response, { 
-        map: true 
+      const parsedCookies = setCookieParser(response, {
+        map: true,
       });
 
       expect(parsedCookies.session_id).toEqual({
@@ -151,6 +148,5 @@ describe("POST /api/v1/sessions", () => {
         httpOnly: true,
       });
     });
-
   });
 });

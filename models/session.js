@@ -4,13 +4,13 @@ import database from "infra/database.js";
 const EXPIRATION_IN_MILLISECONDS = 30 * 24 * 60 * 60 * 1000; // 30 days
 
 async function create(userId) {
-  // Por que 48 bytes? Porque queremos um token de 96 caracteres hexadecimais, e cada byte é representado por 2 caracteres hexadecimais. 
+  // Por que 48 bytes? Porque queremos um token de 96 caracteres hexadecimais, e cada byte é representado por 2 caracteres hexadecimais.
   // Então, 48 bytes * 2 = 96 caracteres. (cada byte é representado por 2 caracteres hexadecimais)
   const token = crypto.randomBytes(48).toString("hex");
   const expiresAt = new Date(Date.now() + EXPIRATION_IN_MILLISECONDS);
 
   const newSession = await runInsertQuery(token, userId, expiresAt);
-  
+
   return newSession;
 
   async function runInsertQuery(token, userId, expiresAt) {
@@ -33,6 +33,6 @@ async function create(userId) {
 const session = {
   create,
   EXPIRATION_IN_MILLISECONDS,
-}
+};
 
 export default session;

@@ -3,7 +3,6 @@ import password from "models/password.js";
 import { NotFoundError, UnauthorizedError } from "infra/errors.js";
 
 async function getAuthenticatedUser(providedEmail, providedPassword) {
-  
   try {
     const storedUser = await findUserByEmail(providedEmail);
     await validatePassword(providedPassword, storedUser.password);
@@ -18,7 +17,6 @@ async function getAuthenticatedUser(providedEmail, providedPassword) {
     }
     throw error;
   }
-
 
   async function findUserByEmail(providedEmail) {
     let storedUser;
@@ -41,7 +39,7 @@ async function getAuthenticatedUser(providedEmail, providedPassword) {
   async function validatePassword(providedPassword, storedPassword) {
     const correctPasswordMatch = await password.compare(
       providedPassword,
-      storedPassword
+      storedPassword,
     );
 
     if (!correctPasswordMatch) {
@@ -55,6 +53,6 @@ async function getAuthenticatedUser(providedEmail, providedPassword) {
 
 const authentication = {
   getAuthenticatedUser,
-}
+};
 
 export default authentication;
