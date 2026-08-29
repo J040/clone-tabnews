@@ -10,7 +10,7 @@ beforeAll(async () => {
 });
 
 describe("POST /api/v1/sessions", () => {
-  describe("", () => {
+  describe("Anonymous user", () => {
     test("With incorrect `email` but correct `password`", async () => {
       await orchestrator.createUser({
         password: "senha-correta",
@@ -135,7 +135,6 @@ describe("POST /api/v1/sessions", () => {
       createdAt.setMilliseconds(0);
       expect(expiresAt - createdAt).toBe(session.EXPIRATION_IN_MILLISECONDS);
 
-      // "map = true" is important to get the cookie as an object instead of an array
       const parsedCookies = setCookieParser(response, {
         map: true,
       });
