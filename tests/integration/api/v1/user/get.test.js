@@ -135,7 +135,6 @@ describe("GET /api/v1/user", () => {
     });
 
     test("With nonexistent session", async () => {
-      // console.log( crypto.randomBytes(48).toString("hex") );
       const nonexistentToken =
         "0c217c3ea5ca9a8339bc698fb3b86cd80584aa089c6cc9f5d8a6768783496451397eaf71f4e80922b2f1f1256c68bf1a";
 
@@ -154,6 +153,19 @@ describe("GET /api/v1/user", () => {
         message: "Usuário não possui sessão ativa.",
         action: "Verifique se o usuário está logado e tente novamente.",
         status_code: 401,
+      });
+
+      // Set-Cookie header assertions
+      const parsedCookies = setCookieParser(response, {
+        map: true,
+      });
+
+      expect(parsedCookies.session_id).toEqual({
+        name: "session_id",
+        value: "invalid",
+        maxAge: -1,
+        path: "/",
+        httpOnly: true,
       });
     });
 
@@ -187,6 +199,19 @@ describe("GET /api/v1/user", () => {
         message: "Usuário não possui sessão ativa.",
         action: "Verifique se o usuário está logado e tente novamente.",
         status_code: 401,
+      });
+
+      // Set-Cookie header assertions
+      const parsedCookies = setCookieParser(response, {
+        map: true,
+      });
+
+      expect(parsedCookies.session_id).toEqual({
+        name: "session_id",
+        value: "invalid",
+        maxAge: -1,
+        path: "/",
+        httpOnly: true,
       });
     });
   });
