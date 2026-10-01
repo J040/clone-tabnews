@@ -6,3 +6,9 @@ services:
       - ../.env.development # This makes Postgres from Container & from live server share the same "variables" ("docker hub"/Postgres image has a list of all needed variables)
     ports:
       - "5432:5432" # host:container (EXPOSING PORTS TO OUTSIDE THE CONTAINER)
+  mailcatcher:
+    container_name: "mailcatcher-dev"
+    image: "sj26/mailcatcher" # We can find this Mailcatcher image on "docker hub"
+    ports:
+      - "1025:1025" # host:container (EXPOSING PORTS TO OUTSIDE THE CONTAINER)
+      - "1080:1080" # host:container (EXPOSING PORTS TO OUTSIDE THE CONTAINER)
