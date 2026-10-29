@@ -2,6 +2,8 @@ import orchestrator from "tests/orchestrator.js";
 import activation from "models/activation.js";
 import webserver from "infra/webserver";
 import user from "models/user.js";
+import email from "infra/email";
+import { password } from "pg/lib/defaults";
 
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
@@ -82,7 +84,26 @@ describe("Use case: Registration Flow (all successful)", () => {
     expect(activatedUser.features).toEqual(["create:session"]);
   });
 
-  test("Login", async () => {});
+  test("Login", async () => {
+    const createSessionsResponse = await fetch(
+      "http://localhost:3000/api/v1/sessions",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: "registration.flow@curso.dev",
+          password: "RegistrationFlowPassword",
+        }),
+      },
+    );
+
+    expect(createSessionsResponse.status).toBe(201);
+
+    const createSessionReponseBody = await createSessionsResponse.json();
+    expect(createSessionReponseBody.user_id).toBe(createUserResponseBody.id);
+  });
 
   test("Get user information", async () => {});
 });

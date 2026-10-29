@@ -5,7 +5,15 @@ import session from "models/session.js";
 
 const router = createRouter();
 
-router.post(postHandler);
+// Middleware declared with .use() ~ run before all requests
+router.use(controller.injectAnonymousOrUser);
+
+// Middleware específico do POST handler no lado esquerdo.
+// Deveríamos passar apenas a função, e não o valor executado (porém queremos deixar claro para quem está lendo, qual a condição)
+// ... por conta disso vamos ter que retornar uma outra função, em vez de um valor (porque o parametro middleware tem que ser uma função)
+// "high order function" (função que retorna uma função ~ bastante usada em programação funcional)
+router.post(controller.canRequest("create:session"), postHandler);
+
 router.delete(deleteHandler);
 
 export default router.handler(controller.errorHandlers);
