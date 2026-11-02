@@ -2,8 +2,8 @@ import orchestrator from "tests/orchestrator.js";
 import activation from "models/activation.js";
 import webserver from "infra/webserver";
 import user from "models/user.js";
-import email from "infra/email";
-import { password } from "pg/lib/defaults";
+// import email from "infra/email";
+// import { password } from "pg/lib/defaults";
 
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
