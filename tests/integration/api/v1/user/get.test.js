@@ -2,6 +2,7 @@ import { version as uuidVersion } from "uuid";
 import setCookieParser from "set-cookie-parser";
 import orchestrator from "tests/orchestrator.js";
 import session from "models/session.js";
+// import { password } from "pg/lib/defaults";
 
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
@@ -10,8 +11,25 @@ beforeAll(async () => {
 });
 
 describe("GET /api/v1/user", () => {
+  describe("Anonymous user", () => {
+    test("Retrieving the endpoint", async () => {
+      const response = await fetch("http://localhost:3000/api/v1/user");
+
+      expect(response.status).toBe(403);
+
+      const responseBody = await response.json();
+      console.log(responseBody);
+      expect(responseBody).toEqual({
+        name: "ForbiddenError",
+        message: "Você não possui permissão para executar esta ação.",
+        action: 'Verifique se seu usuário possui a feature "read:session"',
+        status_code: 403,
+      });
+    });
+  });
+
   describe("Default user", () => {
-    test("With almost expired session", async () => {
+    test("With halfway-expired  session", async () => {
       jest.useFakeTimers({
         now: new Date(Date.now() - session.EXPIRATION_IN_MILLISECONDS / 2),
       });
@@ -20,6 +38,7 @@ describe("GET /api/v1/user", () => {
         username: "UserWithAlmostExpiredSession",
       });
 
+      const activatedUser = await orchestrator.activateUser(createdUser);
       const sessionObject = await orchestrator.createSession(createdUser.id);
 
       jest.useRealTimers();
@@ -38,10 +57,10 @@ describe("GET /api/v1/user", () => {
         id: createdUser.id,
         username: "UserWithAlmostExpiredSession",
         email: createdUser.email,
-        features: ["read:activation_token"],
+        features: ["create:session", "read:session"],
         password: createdUser.password,
         created_at: createdUser.created_at.toISOString(),
-        updated_at: createdUser.updated_at.toISOString(),
+        updated_at: activatedUser.updated_at.toISOString(),
       });
 
       expect(uuidVersion(responseBody.id)).toBe(4);
@@ -79,6 +98,7 @@ describe("GET /api/v1/user", () => {
         username: "userWithValidSession",
       });
 
+      const activatedUser = await orchestrator.activateUser(createdUser);
       const sessionObject = await orchestrator.createSession(createdUser.id);
 
       const response = await fetch("http://localhost:3000/api/v1/user", {
@@ -100,10 +120,10 @@ describe("GET /api/v1/user", () => {
         id: createdUser.id,
         username: "userWithValidSession",
         email: createdUser.email,
-        features: ["read:activation_token"],
         password: createdUser.password,
+        features: ["create:session", "read:session"],
         created_at: createdUser.created_at.toISOString(),
-        updated_at: createdUser.updated_at.toISOString(),
+        updated_at: activatedUser.updated_at.toISOString(),
       });
 
       expect(uuidVersion(responseBody.id)).toBe(4);
