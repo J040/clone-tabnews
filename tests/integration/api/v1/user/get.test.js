@@ -18,7 +18,7 @@ describe("GET /api/v1/user", () => {
       expect(response.status).toBe(403);
 
       const responseBody = await response.json();
-      console.log(responseBody);
+
       expect(responseBody).toEqual({
         name: "ForbiddenError",
         message: "Você não possui permissão para executar esta ação.",
