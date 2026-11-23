@@ -29,7 +29,7 @@ describe("GET /api/v1/user", () => {
   });
 
   describe("Default user", () => {
-    test("With halfway-expired  session", async () => {
+    test("With halfway-expired session", async () => {
       jest.useFakeTimers({
         now: new Date(Date.now() - session.EXPIRATION_IN_MILLISECONDS / 2),
       });
@@ -58,7 +58,6 @@ describe("GET /api/v1/user", () => {
         username: "UserWithAlmostExpiredSession",
         email: createdUser.email,
         features: ["create:session", "read:session", "update:user"],
-        password: createdUser.password,
         created_at: createdUser.created_at.toISOString(),
         updated_at: activatedUser.updated_at.toISOString(),
       });
@@ -120,7 +119,6 @@ describe("GET /api/v1/user", () => {
         id: createdUser.id,
         username: "userWithValidSession",
         email: createdUser.email,
-        password: createdUser.password,
         features: ["create:session", "read:session", "update:user"],
         created_at: createdUser.created_at.toISOString(),
         updated_at: activatedUser.updated_at.toISOString(),

@@ -27,7 +27,6 @@ describe("PATCH /api/v1/users/[username]", () => {
         },
       );
 
-      // Success
       expect(response.status).toBe(403);
 
       const responseBody = await response.json();
@@ -58,7 +57,6 @@ describe("PATCH /api/v1/users/[username]", () => {
         },
       );
 
-      // Not Found
       expect(response.status).toBe(404);
 
       const responseBody = await response.json();
@@ -96,7 +94,6 @@ describe("PATCH /api/v1/users/[username]", () => {
         }),
       });
 
-      // Bad Request
       expect(response.status).toBe(400);
 
       const responseBody = await response.json();
@@ -134,7 +131,6 @@ describe("PATCH /api/v1/users/[username]", () => {
         }),
       });
 
-      // Bad Request
       expect(response.status).toBe(403);
 
       const responseBody = await response.json();
@@ -176,7 +172,6 @@ describe("PATCH /api/v1/users/[username]", () => {
         },
       );
 
-      // Bad Request
       expect(response.status).toBe(400);
 
       const responseBody = await response.json();
@@ -208,7 +203,6 @@ describe("PATCH /api/v1/users/[username]", () => {
         },
       );
 
-      // Success
       expect(response.status).toBe(200);
 
       const responseBody = await response.json();
@@ -216,9 +210,7 @@ describe("PATCH /api/v1/users/[username]", () => {
       expect(responseBody).toEqual({
         id: responseBody.id,
         username: "uniqueUser2",
-        email: responseBody.email,
         features: ["create:session", "read:session", "update:user"],
-        password: responseBody.password,
         created_at: responseBody.created_at,
         updated_at: responseBody.updated_at,
       });
@@ -249,7 +241,6 @@ describe("PATCH /api/v1/users/[username]", () => {
         },
       );
 
-      // Success
       expect(response.status).toBe(200);
 
       const responseBody = await response.json();
@@ -257,9 +248,7 @@ describe("PATCH /api/v1/users/[username]", () => {
       expect(responseBody).toEqual({
         id: responseBody.id,
         username: responseBody.username,
-        email: "uniqueEmail2@curso.dev",
         features: ["create:session", "read:session", "update:user"],
-        password: responseBody.password,
         created_at: responseBody.created_at,
         updated_at: responseBody.updated_at,
       });
@@ -291,7 +280,6 @@ describe("PATCH /api/v1/users/[username]", () => {
         },
       );
 
-      // Success
       expect(response.status).toBe(200);
 
       const responseBody = await response.json();
@@ -299,9 +287,7 @@ describe("PATCH /api/v1/users/[username]", () => {
       expect(responseBody).toEqual({
         id: responseBody.id,
         username: responseBody.username,
-        email: responseBody.email,
         features: ["create:session", "read:session", "update:user"],
-        password: responseBody.password,
         created_at: responseBody.created_at,
         updated_at: responseBody.updated_at,
       });
@@ -359,7 +345,6 @@ describe("PATCH /api/v1/users/[username]", () => {
         },
       );
 
-      // Bad Request
       expect(response.status).toBe(200);
 
       const responseBody = await response.json();
@@ -367,9 +352,7 @@ describe("PATCH /api/v1/users/[username]", () => {
       expect(responseBody).toEqual({
         id: defaultUser.id,
         username: "AlteradoPorPrivilegiado",
-        email: defaultUser.email,
         features: ["read:activation_token"],
-        password: defaultUser.password,
         created_at: responseBody.created_at,
         updated_at: responseBody.updated_at,
       });
